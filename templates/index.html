@@ -9,17 +9,17 @@
 </head>
 <body>
 
-    <!-- العنوان -->
+   
     <header>
         <h1>E-commerce Platform</h1>
     </header>
 
-    <!-- قسم السلة -->
+   
     <div class="cart-info">
         <p id="cart-count">Shopping Cart: {{ cart_count }} items</p>
     </div>
 
-    <!-- شريط البحث -->
+   
     <div class="search-bar">
         <form action="/" method="get">
             <input type="text" name="search" placeholder="Search for products">
@@ -27,7 +27,7 @@
         </form>
     </div>
 
-    <!-- رسائل التنبيه -->
+   
     {% if not message and not search_term %}
     <div class="default-message">
         <p>Showing only 3 latest products. Use the search bar to find more.</p>
@@ -40,7 +40,7 @@
     </div>
     {% endif %}
 
-    <!-- عرض المنتجات -->
+   
     <div class="products">
         {% for product in products %}
         <div class="product-card">
@@ -56,18 +56,18 @@
         {% endfor %}
     </div>
 
-    <!-- حقوق النشر -->
+  
     <footer class="footer">
         <p>&copy; 2024 Guess What Company. All rights reserved.</p>
     </footer>
 
     <script>
-        // تحديث عدد العناصر في العربة
+        
         function updateCartCount(count) {
             $('#cart-count').text('Shopping Cart: ' + count + ' items');
         }
 
-        // عند الضغط على زر "Add to Cart"
+        
         $('.add-to-cart').click(function() {
             var productId = $(this).data('product-id');
             var productName = $(this).data('product-name');
