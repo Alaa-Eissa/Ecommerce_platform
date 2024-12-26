@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- العنوان -->
+    <header>
+        <h1>E-commerce Platform</h1>
+    </header>
+
+    <!-- قسم السلة -->
+    <div class="cart-info">
+        <p id="cart-count">Shopping Cart: {{ cart_count }} items</p>
+    </div>
+
+    <!-- شريط البحث -->
+    <div class="search-bar">
+        <form action="/" method="get">
+            <input type="text" name="search" placeholder="Search for products">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- رسائل التنبيه -->
+    {% if not message and not search_term %}
+    <div class="default-message">
+        <p>Showing only 3 latest products. Use the search bar to find more.</p>
+    </div>
+    {% endif %}
+
+    {% if message %}
+    <div class="no-results">
+        <p>{{ message }}</p>
+    </div>
+    {% endif %}
+
+    <!-- عرض المنتجات -->
+    <div class="products">
+        {% for product in products %}
+        <div class="product-card">
+            <h3>{{ product[1] }}</h3>
+            <p>{{ product[2] }}</p>
+            <p>Price: ${{ product[3] }}</p>
+            <button class="add-to-cart" 
+                    data-product-id="{{ product[0] }}" 
+                    data-product-name="{{ product[1] }}">
+                Add to Cart
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- حقوق النشر -->
+    <footer class="footer">
+        <p>&copy; 2024 Guess What Company. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // تحديث عدد العناصر في العربة
+        function updateCartCount(count) {
+            $('#cart-count').text('Shopping Cart: ' + count + ' items');
+        }
+
+        // عند الضغط على زر "Add to Cart"
+        $('.add-to-cart').click(function() {
+            var productId = $(this).data('product-id');
+            var productName = $(this).data('product-name');
+
+            $.post('/add_to_cart', { product_id: productId, product_name: productName }, function(response) {
+                updateCartCount(response.cart_count);
+            });
+        });
+    </script>
+
+</body>
+</html>
