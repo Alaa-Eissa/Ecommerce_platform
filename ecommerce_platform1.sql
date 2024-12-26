@@ -21,7 +21,8 @@ description TEXT ,
 price DECIMAL(10, 2) NOT NULL ,
 stock_quantity INT NOT NULL ,
 category_id INT,
-forgeing key (category_id) references categories(category_id)
+ foreign key (user_id) references Users (user_id),
+foreign key (category_id) references categories(category_id)
 );
 
 CREATE TABLE Orders(
